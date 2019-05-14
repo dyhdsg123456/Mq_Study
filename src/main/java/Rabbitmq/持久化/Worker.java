@@ -1,4 +1,4 @@
-package Rabbitmq.demo2;
+package Rabbitmq.持久化;
 
 import com.rabbitmq.client.*;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeoutException;
  * Description:接收端
  */
 public class Worker {
-    private final static String QUEUE_NAME = "hello";
+    private final static String QUEUE_NAME = "hello_durable";
 
     public static void main(String[] args) throws IOException, TimeoutException {
         // 创建连接
@@ -22,8 +22,8 @@ public class Worker {
         // 创建一个连接
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
-
-        channel.queueDeclare(QUEUE_NAME,false,false,false,null);
+        boolean durable = true;
+        channel.queueDeclare(QUEUE_NAME,durable,false,false,null);
 
         final Consumer consumer = new DefaultConsumer(channel) {
             @Override
@@ -40,13 +40,13 @@ public class Worker {
             }
         };
         // acknowledgment is covered below
-        boolean autoAck = true;
+        boolean autoAck = false;
         channel.basicConsume(QUEUE_NAME, autoAck, consumer);
     }
 
 
     private static void doWork(String task) throws InterruptedException {
         String[] taskArr = task.split(":");
-        TimeUnit.MILLISECONDS.sleep(Long.valueOf(taskArr[1]));
+        TimeUnit.SECONDS.sleep(Long.valueOf(taskArr[1]));
     }
 }
