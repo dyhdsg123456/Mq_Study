@@ -1,4 +1,4 @@
-package Rabbitmq;
+package Rabbitmq.demo1;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -34,7 +34,7 @@ public class Send
         // 参数5 arguments
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         // 发送消息
-        String message = "Hello World!";
+        String message = "Hello World2!";
         // basicPublish(String exchange, String routingKey, BasicProperties props, byte[] body)
         // 参数1 exchange ：交换器
         // 参数2 routingKey ： 路由键
