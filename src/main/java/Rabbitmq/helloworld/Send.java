@@ -16,7 +16,7 @@ public class Send
 {
     private final static String QUEUE_NAME = "hello";
 
-    public static void main(String[] args) throws IOException, TimeoutException, TimeoutException {
+    public static void main(String[] args) throws IOException,TimeoutException {
         // 创建连接
         ConnectionFactory factory = new ConnectionFactory();
         // 设置 RabbitMQ 的主机名
@@ -34,7 +34,7 @@ public class Send
         // 参数5 arguments
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         // 发送消息
-        String message = "Hello World2!";
+        String message = "Hello World!";
         // basicPublish(String exchange, String routingKey, BasicProperties props, byte[] body)
         // 参数1 exchange ：交换器
         // 参数2 routingKey ： 路由键
