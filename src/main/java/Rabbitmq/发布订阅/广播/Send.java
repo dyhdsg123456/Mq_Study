@@ -1,4 +1,4 @@
-package Rabbitmq.消息应答;
+package Rabbitmq.发布订阅.广播;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -12,8 +12,8 @@ import java.util.concurrent.TimeoutException;
  * Date:   2019/5/14
  * Description:
  */
-public class AckNewTask {
-    private final static String QUEUE_NAME = "hello";
+public class Send {
+    private static final String EXCHANGE_NAME = "logs";
 
     public static void main(String[] args) throws IOException, TimeoutException {
         // 创建连接
@@ -24,14 +24,12 @@ public class AckNewTask {
         Connection connection = factory.newConnection();
         // 创建一个通道
         Channel channel = connection.createChannel();
-        // 指定一个队列
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        // 发送消息
-        for (int i = 0; i < 10; i++) {
-            String message = "duyuanhao:" + i;
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-            System.out.println(" [x] Sent '" + message + "'");
-        }
+        // 指定一个交换器
+        channel.exchangeDeclare(EXCHANGE_NAME,"fanout");
+        String message = "dyh log.";
+        channel.basicPublish(EXCHANGE_NAME,"",null,message.getBytes());
+        System.out.println(" [x] Sent '" + message + "'");
+
         // 关闭频道和连接
         channel.close();
         connection.close();

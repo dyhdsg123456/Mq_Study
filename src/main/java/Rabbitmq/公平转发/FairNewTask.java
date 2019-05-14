@@ -31,7 +31,7 @@ public class FairNewTask {
         channel.basicQos(prefetchCount);
         // 发送消息
         for (int i = 0;i < 50; i++) {
-            String message = "Liang:" + i;
+            String message = "duyuanhao:" + i;
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
             System.out.println(" [x] Sent '" + message + "'");
         }
